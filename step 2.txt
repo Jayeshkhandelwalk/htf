@@ -1,0 +1,240 @@
+# AI-based protein detection system for agricultural by-products
+
+For your project, you can build an AI-powered protein estimation system that analyses guar meal, groundnut cake, almond cake, rice bran and pulse-processing residues, then predicts their protein content.
+
+The most practical approach is to combine Near-Infrared (NIR) spectroscopy + machine learning + laboratory-verified protein measurements.
+
+The important distinction is that AI does not directly know how much protein is in a sample. You first need samples whose protein content has been measured in a laboratory. The model learns patterns in the sensor data that correlate with those measurements and predicts protein content for new samples.
+
+## 1. How the system works
+
+[Laboratory table with grains, beans, seeds, oil samples and test tubes beside a microscope, showing food quality research and agricultural testing.](https://images.openai.com/static-rsc-4/hUoHIkanuk2UTVqc8ym0p6VbI97TcT6IK7NX1YfzbWG1IAMRkhoxD3H51wKS2I-eUL_GOvpxj1h6p7TsQUs64aJOqfCBQrGadtKD_3CZL-bLgk786VN2Tdzot3Di5J2IGkbn1c4FB-t77AHb9EBa63rQxfUkKpRkSx-9xwSO99u-DofT_h5PoTQYSPurzQOM?purpose=inline)
+
+Input: Agricultural by-product
+
+A sample of rice bran, guar meal, oilcake or pulse residue is collected, labelled and prepared consistently.
+
+[InfraLab Top Loader - Analysis of Moisture, Fat and Protein](https://images.openai.com/static-rsc-4/p5uw_6V7UQgiqeZflJJcUoKYyMEh_R36hilMzcxaqDQ-IOgZxD7gkk0ULxEw-iVYSrIhS8HrT_UaF2Ew8JcWNrKlgjqe8ABTb9ztOhAfNg96qUzym0tve3BSgvkaM0BhWZOcLWin8eN_TW4uevO88J29SCNtEcb16AYOGvSydQM?purpose=inline)
+
+Sensor: NIR spectroscopy
+
+The instrument measures how the sample interacts with near-infrared light across different wavelengths. These measurements contain information associated with chemical composition, including protein.
+
+[UDK 169 with AutoKjel Autosampler - Automatic Kjeldahl Nitrogen Protein Analyzer](https://images.openai.com/static-rsc-4/9B5M-nfIMvX9XUIBk8AaZ5zW7c4k1PYYJx00DrIbWgKHbOcqc2tQ1-kC5G6udvLqdtj6K15k5bVdh7Zpen7U4XzQ1TZZsxHzl6xv8uK7sFivC3XFEeFnvcNaEM7ZUV4Brr1y-Q_DmvBe2cJQCcsd3RVlB4catx9NUPvIoQlm-Z8?purpose=inline)
+
+Ground truth: Laboratory protein test
+
+Measure protein using a validated method such as Kjeldahl or Dumas analysis. These results become the target values for training the AI.
+
+[Data Science (Distance Learning) BSc(Hons) - University of Huddersfield](https://images.openai.com/static-rsc-4/yzv5lplNjdRfwVbHbpCdmV38o3ZOQ6bH5XwRHNlqwRZFFxDY0iiMYlAAemj_kCqL2PN8DhGkd-4gnSQqetKZ9ZSbV2yd22Ottt8tvvBuFDLtnys9OSMR697Ydo77JLyl2c8Hs_LMQsmFXZA0puA-AEbNGDbBvM6rMm4Xy4YffgQ?purpose=inline)
+
+AI prediction
+
+A regression model learns the relationship between spectral measurements and lab results, then estimates protein percentage for unseen samples.
+
+## 2. Hardware required
+
+There are two possible builds: a proper research prototype and a low-cost demonstration.
+
+[NeoSpectra | Instant Lab Analysis Solutions Where Decisions Matter](https://images.openai.com/static-rsc-4/QgRYhVkptcvwjtAADoMvYjE4MAsrDuN4oIqJYtB6wH9mkIOWDQcEs2LNLkq3vJIBU8bT88mMHk1-wh1-rxHim69lIe3TsbgiXIFCHnmqwJaEqOOygcRZdVDFsxVJ7Cvng60eIcHbS4QFut_8g1GfCoVhI8h9tAG2vWz-1ue7OQs?purpose=inline)
+
+Option A — Recommended: NIR-based AI
+
+Best for real predictions
+
+- Portable NIR spectrometer with a suitable wavelength range, ideally extending into the short-wave NIR region around 900–1700 nm or beyond.
+- Sample cup or holder and a consistent sample preparation setup.
+- Laptop to process sensor data and run the model.
+- Access to a food-analysis laboratory for reference protein measurements.
+
+A commercial NIR instrument is the easiest route to reliable spectral data.
+
+[Newton Creative Labs — Product Development & Innovation](https://images.openai.com/static-rsc-4/u5UTnJfuKWpgzyvM_XC9Fyq4mnv9fCHXxwteAStNgG2vr-ei6N3PFaUEx9PHygQ-nLPxTAoSmGNXCLOPhCcvNaj72UpS-R46TTW0ncdUUfVWHWQALMimLFjgwV6IxVKgd3G_z6WJxDYLQKbBSLxFAGVTsGZAtVSM1W-jUc2_mk0?purpose=inline)
+
+Option B — Low-cost prototype
+
+- ESP32 or Arduino for sensor control.
+- A suitable miniature spectrometer module, if available within budget.
+- Laptop for model training and inference.
+- Sample container, consistent illumination and calibration references.
+
+A simple colour sensor or ordinary camera cannot reliably measure protein percentage. This build is useful for demonstrating data acquisition, but it needs a validated spectroscopy sensor and calibration dataset for meaningful protein predictions.
+
+Important: You do not need a powerful GPU. A normal laptop can train and run models such as Partial Least Squares Regression (PLSR) and Random Forest on typical spectroscopy datasets.
+
+Research has demonstrated protein estimation from NIR spectra in grains and other plant materials, but calibration performance depends on the sample types and the instrument used.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://pmc.ncbi.nlm.nih.gov\&sz=32)
+
+PubMed Central (PMC)
+
++2
+
+
+
+## 3. Software stack
+
+Here is the stack I would use for a student or college project.
+
+| Layer                | Recommended technology                        | Purpose                                                |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------ |
+| Sensor acquisition   | Spectrometer SDK / Python                     | Read wavelength and intensity data                     |
+| Data processing      | NumPy, pandas, SciPy                          | Clean and organise spectra                             |
+| Signal preprocessing | Standard Normal Variate (SNV), Savitzky–Golay | Reduce scattering and spectral noise where appropriate |
+| AI / ML              | scikit-learn                                  | Train protein prediction models                        |
+| Initial model        | PLS Regression                                | Strong baseline for spectroscopy                       |
+| Comparison model     | Random Forest or SVR                          | Compare alternative prediction approaches              |
+| Model evaluation     | RMSE, MAE, \\(R^2\\)                          | Measure prediction accuracy                            |
+| Backend              | FastAPI                                       | Accept sample data and return predictions              |
+| Frontend             | HTML, CSS, JavaScript                         | Show results and charts                                |
+| Storage              | CSV initially; SQLite later                   | Store sample IDs, readings and lab results             |
+| Deployment           | Local laptop initially                        | Run without needing cloud infrastructure               |
+
+Start with PLS Regression rather than a deep neural network. Spectral data are high-dimensional, and a well-calibrated classical model can be more practical when the dataset is small.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://pmc.ncbi.nlm.nih.gov\&sz=32)
+
+PubMed Central (PMC)
+
++1
+
+
+
+## 4. Flowchart of the complete system
+
+Collect by-product samples
+
+Guar meal · Groundnut cake · Almond cake · Rice bran · Pulse residues
+
+Prepare samples consistently
+
+Dry if required, grind, mix and label
+
+Acquire NIR spectral data
+
+Spectrometer → wavelength/intensity readings
+
+Measure reference protein
+
+Kjeldahl or Dumas laboratory analysis
+
+Build labelled dataset
+
+Spectra (X) + measured protein % (y)
+
+Preprocess and split data
+
+Training · validation · independent test set
+
+Train and evaluate regression models
+
+PLSR → compare with SVR / Random Forest
+
+New sample → trained model
+
+Preprocess its spectrum using the same pipeline
+
+Display predicted protein %
+
+Prediction + uncertainty/error estimate + sample ID
+
+The laboratory reference measurement is essential during model development. Once validated, the system can estimate protein for new samples without running a laboratory test for every individual prediction. This is the standard calibration approach for NIR analysis.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://doi.org\&sz=32)
+
+The Royal Society of Chemistry
+
++1
+
+
+
+## 5. How much data do you need?
+
+For a student prototype, I would aim for the following initial plan. These are project targets, not guaranteed minimums for scientific validity.
+
+| Dataset component                     | Suggested starting target |
+| ------------------------------------- | ------------------------- |
+| Total independently collected samples | 150–300                   |
+| Different by-product categories       | 5                         |
+| Samples per category                  | 30–60                     |
+| Reference protein measurements        | Every sample              |
+| Independent test samples              | 20% of dataset            |
+| Repeated sensor scans                 | 3 per sample, averaged    |
+
+Try to collect samples from different suppliers, production batches and dates. Three scans of the same physical sample are not three independent samples. Split the data by sample or batch to prevent data leakage.
+
+Important modelling decision: With limited data, build a separate calibrated model for each by-product type first. A single model covering all five materials may struggle because their fibre, fat, moisture and spectral properties differ substantially. Test a combined model later.
+
+## 6. What the AI output should look like
+
+## Sample analysis dashboard
+
+Illustrative demo
+
+Example output only — these are not real sensor measurements.
+
+Predicted crude protein
+
+# 42.6%
+
+Dry-matter basis
+
+Prediction error
+
+# ± 2.0 pp
+
+Illustrative, not validated
+
+Analysis results could also include:
+
+Protein percentage and estimated uncertainty
+
+Spectral graph and model confidence diagnostics
+
+Reference lab result, when available, for comparison
+
+Safety status: not assessed by the protein prediction model
+
+Use RMSE or MAE, \\(R^2\\), prediction bias and independent test performance to assess the model. An uncertainty estimate should be derived from actual validation data rather than assigned arbitrarily. High predicted protein does not establish food safety, digestibility or freedom from anti-nutrients.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://pmc.ncbi.nlm.nih.gov\&sz=32)
+
+PMC
+
++1
+
+
+
+## 7. Recommended project architecture
+
+NIR spectrometer
+
+Python sensor reader
+
+CSV / SDK data ingestion
+
+Preprocessing pipeline + trained PLSR model
+
+scikit-learn · saved model artifact
+
+FastAPI backend
+
+Web dashboard
+
+HTML · CSS · JavaScript · charts · prediction history
+
+### Suggested development phases
+
+1. Phase 1: Collect samples and obtain laboratory protein measurements.
+2. Phase 2: Borrow or access an NIR spectrometer through a food technology, chemistry or agricultural research lab.
+3. Phase 3: Train and compare PLSR, SVR and Random Forest in Python.
+4. Phase 4: Validate predictions on samples from unseen batches.
+5. Phase 5: Build the dashboard and connect it to the sensor and model.
+
+If you do not yet have access to a spectrometer, you can develop and test the machine-learning pipeline with a properly labelled spectral dataset first. It would be a software prototype, not yet a working physical protein detector.
+
+## My recommendation
+
+Build a portable NIR + Python/PLSR prototype first. It is more defensible scientifically than trying to infer protein from an ordinary camera image, and it leaves room to add anti-nutrient screening and food-suitability analysis later.
+
+For further reading, see the research on [portable NIR for grain protein estimation](https://pmc.ncbi.nlm.nih.gov/articles/PMC9146900/?utm_source=chatgpt.com) and the [Cereals & Grains Association's NIR calibration guidance](https://www.cerealsgrains.org/resources/Methods/Pages/39InfraredAnalysis.aspx?utm_source=chatgpt.com).

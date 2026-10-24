@@ -1,0 +1,6 @@
+__pycache__/
+.pytest_cache/
+*.py[cod]
+byproduct_lab.db
+byproduct_lab.db-shm
+byproduct_lab.db-wal
